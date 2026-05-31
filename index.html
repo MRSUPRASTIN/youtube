@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube Auditor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-900 text-white font-sans">
+    <div class="max-w-3xl mx-auto py-20 px-4">
+        <div class="text-center mb-10">
+            <h1 class="text-5xl font-bold mb-4 text-red-500">YT Audit</h1>
+            <p class="text-gray-400 text-xl">Узнай сильные и слабые стороны канала</p>
+        </div>
+
+        <div class="flex gap-2 mb-10">
+            <input type="text" id="url" placeholder="Ссылка на канал (@name)" class="flex-1 p-4 rounded-lg bg-gray-800 border border-gray-700 focus:border-red-500 outline-none">
+            <button onclick="check()" id="btn" class="bg-red-600 px-6 py-4 rounded-lg font-bold hover:bg-red-700 transition">Анализ</button>
+        </div>
+
+        <div id="loader" class="hidden text-center py-10">
+            <i class="fas fa-spinner animate-spin text-3xl"></i>
+        </div>
+
+        <div id="results" class="hidden space-y-6">
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 flex justify-between items-center">
+                <h2 id="name" class="text-2xl font-bold"></h2>
+                <div class="text-3xl font-black text-green-500" id="score"></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-green-900/20 p-5 rounded-xl border border-green-500/30">
+                    <h3 class="text-green-400 font-bold mb-3">Плюсы:</h3>
+                    <ul id="pros" class="list-disc ml-5 space-y-2"></ul>
+                </div>
+                <div class="bg-red-900/20 p-5 rounded-xl border border-red-500/30">
+                    <h3 class="text-red-400 font-bold mb-3">Минусы:</h3>
+                    <ul id="minuses" class="list-disc ml-5 space-y-2"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function check() {
+            const url = document.getElementById('url').value;
+            if(!url) return;
+            
+            document.getElementById('loader').classList.remove('hidden');
+            document.getElementById('results').classList.add('hidden');
+
+            const res = await fetch('/analyze', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({url})
+            });
+            const data = await res.json();
+            
+            document.getElementById('loader').classList.add('hidden');
+            if(data.error) return alert("Ошибка! Проверьте ссылку.");
+
+            document.getElementById('name').innerText = data.name;
+            document.getElementById('score').innerText = data.score + '/10';
+            
+            document.getElementById('pros').innerHTML = data.pros.map(p => `<li>${p}</li>`).join('');
+            document.getElementById('minuses').innerHTML = data.minuses.map(m => `<li>${m}</li>`).join('');
+            
+            document.getElementById('results').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
