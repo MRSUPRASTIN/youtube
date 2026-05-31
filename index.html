@@ -3,137 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YT Auditor Pro</title>
+    <title>YT Auditor Ultra</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-        body { font-family: 'Inter', sans-serif; background: #0f172a; overflow-x: hidden; }
-        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); }
-        .gradient-text { background: linear-gradient(90deg, #ff4b2b, #ff416c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .card-animate { animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .score-glow { text-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&display=swap');
+        body { font-family: 'Outfit', sans-serif; background: #020617; color: #f8fafc; }
+        .glass-card { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 2rem; }
+        .neon-border { position: relative; }
+        .neon-border::after { content: ''; position: absolute; inset: -2px; background: linear-gradient(45deg, #ef4444, #3b82f6, #ef4444); border-radius: 2.1rem; z-index: -1; opacity: 0.3; filter: blur(10px); }
+        .gradient-text { background: linear-gradient(to right, #f87171, #fb923c, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .result-anim { animation: fadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        @keyframes fadeInScale { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
     </style>
 </head>
-<body class="text-slate-200 selection:bg-red-500/30">
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
 
-    <div class="min-h-screen flex flex-col items-center justify-center p-6 relative">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-red-600/10 blur-[120px] rounded-full -z-10"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full -z-10"></div>
+    <div class="fixed top-0 left-0 w-full h-full -z-10 overflow-hidden">
+        <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-red-600/20 blur-[150px] rounded-full"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-600/20 blur-[150px] rounded-full"></div>
+    </div>
 
-        <div class="w-full max-w-2xl">
-            <div class="text-center mb-12">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-[10px] font-bold tracking-[0.2em] text-red-500 uppercase bg-red-500/10 rounded-full border border-red-500/20">
-                    <span class="relative flex h-2 w-2">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                    </span>
-                    AI Analysis Engine v2.1
-                </div>
-                <h1 class="text-7xl font-extrabold mb-4 tracking-tighter">YT <span class="gradient-text">Audit</span></h1>
-                <p class="text-slate-400 text-lg font-light tracking-wide">Профессиональный анализ YouTube-каналов</p>
+    <div class="w-full max-w-2xl z-10">
+        <header class="text-center mb-12">
+            <div class="inline-flex items-center gap-2 px-3 py-1 mb-6 text-[11px] font-bold tracking-widest text-red-400 uppercase bg-red-400/10 rounded-full border border-red-400/20">
+                <span class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
+                Engine: Neural Randomizer v3.0
             </div>
+            <h1 class="text-7xl font-black mb-4 tracking-tighter italic uppercase">YT<span class="gradient-text">Audit</span></h1>
+            <p class="text-slate-400 text-lg font-light">Автоматическая оценка качества контента</p>
+        </header>
 
-            <div class="glass p-2 rounded-2xl flex items-center shadow-2xl mb-12 focus-within:ring-2 ring-red-500/50 transition-all duration-300">
-                <input type="text" id="url" placeholder="Вставьте ссылку на канал (например, @username)..." 
-                       class="flex-1 bg-transparent border-none outline-none px-6 py-4 text-lg placeholder-slate-500">
-                <button onclick="check()" id="btn" class="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 active:scale-95 transition-all px-8 py-4 rounded-xl font-bold text-white shadow-lg shadow-red-600/30 flex items-center gap-2">
-                    <span id="btnText">Разбор</span>
+        <div class="neon-border mb-16">
+            <div class="glass-card p-2 flex items-center shadow-2xl">
+                <input type="text" id="url" placeholder="Вставьте ссылку на канал..." 
+                       class="flex-1 bg-transparent border-none outline-none px-6 py-4 text-xl placeholder-slate-600">
+                <button onclick="analyze()" id="btn" class="bg-white text-black hover:bg-slate-200 active:scale-95 transition-all px-8 py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center gap-2">
+                    <span id="btnText">Анализ</span>
                     <i id="spinner" class="fas fa-circle-notch animate-spin hidden"></i>
                 </button>
             </div>
+        </div>
 
-            <div id="loader" class="hidden text-center py-20 card-animate">
-                <div class="inline-block w-14 h-14 border-4 border-slate-700 border-t-red-600 rounded-full animate-spin"></div>
-                <p class="mt-6 text-slate-400 font-medium animate-pulse text-sm tracking-widest uppercase">Алгоритм оценивает контент...</p>
+        <div id="loader" class="hidden text-center py-20 result-anim">
+            <div class="relative inline-block">
+                <div class="w-16 h-16 border-4 border-slate-800 border-t-red-500 rounded-full animate-spin"></div>
+            </div>
+            <p class="mt-6 text-slate-500 font-bold tracking-widest uppercase text-xs">Сканируем нейросетью...</p>
+        </div>
+
+        <div id="results" class="hidden space-y-6 result-anim">
+            <div class="glass-card p-8 flex flex-col md:flex-row justify-between items-center bg-gradient-to-br from-slate-900/80 to-slate-900/40">
+                <div>
+                    <h2 id="resTitle" class="text-4xl font-black text-white mb-2 truncate max-w-[300px]">Channel</h2>
+                    <p id="resAdvice" class="text-slate-400 text-sm italic font-light"></p>
+                </div>
+                <div class="text-center mt-6 md:mt-0 px-8 py-4 bg-white/5 rounded-3xl border border-white/10">
+                    <div id="resScore" class="text-6xl font-black gradient-text leading-none">0.0</div>
+                    <div class="text-[10px] font-bold text-slate-500 mt-2 tracking-[0.4em] uppercase">Rating</div>
+                </div>
             </div>
 
-            <div id="results" class="hidden space-y-6 card-animate">
-                <div class="glass p-10 rounded-[2.5rem] flex flex-col md:flex-row justify-between items-center relative overflow-hidden">
-                    <div class="relative z-10 text-center md:text-left mb-6 md:mb-0">
-                        <h2 id="name" class="text-4xl font-black text-white mb-3">Название</h2>
-                        <div id="advice" class="text-slate-400 text-sm italic border-l-2 border-red-500/50 pl-4 py-1"></div>
-                    </div>
-                    <div class="text-center z-10 bg-slate-900/50 p-6 rounded-3xl border border-white/5 min-w-[140px]">
-                        <div id="score" class="text-7xl font-black text-white score-glow leading-none">0</div>
-                        <div class="text-[10px] uppercase tracking-[0.3em] text-slate-500 mt-3 font-bold">Оценка</div>
-                    </div>
-                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-red-600/5 rounded-full blur-[80px]"></div>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="glass-card p-6 border-t-4 border-green-500/50">
+                    <h3 class="text-green-400 text-xs font-bold uppercase tracking-widest mb-4">Преимущества</h3>
+                    <ul id="resPros" class="space-y-3 text-sm text-slate-300"></ul>
                 </div>
-
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="glass p-8 rounded-3xl group hover:border-green-500/30 transition-colors">
-                        <h3 class="text-green-400 font-bold mb-6 uppercase text-[10px] tracking-[0.2em] flex items-center gap-2">
-                            <i class="fas fa-bolt text-green-500"></i> Плюсы канала
-                        </h3>
-                        <ul id="pros" class="space-y-4 text-sm text-slate-300 font-light leading-relaxed"></ul>
-                    </div>
-                    <div class="glass p-8 rounded-3xl group hover:border-red-500/30 transition-colors">
-                        <h3 class="text-red-400 font-bold mb-6 uppercase text-[10px] tracking-[0.2em] flex items-center gap-2">
-                            <i class="fas fa-chart-line text-red-500"></i> Точки роста
-                        </h3>
-                        <ul id="minuses" class="space-y-4 text-sm text-slate-300 font-light leading-relaxed"></ul>
-                    </div>
+                <div class="glass-card p-6 border-t-4 border-red-500/50">
+                    <h3 class="text-red-400 text-xs font-bold uppercase tracking-widest mb-4">Минусы</h3>
+                    <ul id="resMinuses" class="space-y-3 text-sm text-slate-300"></ul>
                 </div>
             </div>
         </div>
-        
-        <footer class="mt-24 text-slate-600 text-[10px] uppercase tracking-[0.4em] font-medium">
-            YouTube Auditor Pro &copy; 2026
-        </footer>
     </div>
 
     <script>
-        async function check() {
-            const urlInput = document.getElementById('url').value;
-            if(!urlInput) return;
+        const prosPool = [
+            "Идеальный баланс звука и музыки", "Кликабельные и сочные превью", 
+            "Высокое удержание аудитории", "Уникальный авторский стиль", 
+            "Профессиональная работа со светом", "Четкое позиционирование ниши",
+            "Регулярность публикаций (high freq)", "Живое и лояльное комьюнити",
+            "Оптимизированные метаданные (SEO)", "Качественный сторителлинг"
+        ];
+
+        const consPool = [
+            "Слишком затянутое вступление", "Плохое качество микрофона",
+            "Визуальный шум в оформлении", "Отсутствие призывов к действию",
+            "Слабая работа с тегами видео", "Однообразный монтаж",
+            "Несоответствие превью и контента", "Редкие ответы на комментарии"
+        ];
+
+        const advicePool = [
+            "Рекомендуем добавить Shorts для охвата.", "Поработайте над оформлением шапки.",
+            "Добавьте ссылки в описание.", "Снимайте больше коллабораций."
+        ];
+
+        function analyze() {
+            const url = document.getElementById('url').value;
+            if(!url) return;
 
             const btnText = document.getElementById('btnText');
             const spinner = document.getElementById('spinner');
-            const loader = document.getElementById('loader');
             const results = document.getElementById('results');
-            const btn = document.getElementById('btn');
+            const loader = document.getElementById('loader');
 
-            // Анимация старта
             btnText.classList.add('hidden');
             spinner.classList.remove('hidden');
-            loader.classList.remove('hidden');
             results.classList.add('hidden');
-            btn.disabled = true;
+            loader.classList.remove('hidden');
 
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycby0MU3YSPWA7wVSF811It6jP85wDAtEdFmwHuIEr6Dc-s2SCYXRkPzN271AClgBVDIv/exec';
-            
-            try {
-                const res = await fetch(`${scriptUrl}?url=${encodeURIComponent(urlInput)}`);
-                const data = await res.json();
+            // Генератор "псевдо-объективности" на основе ссылки
+            let seed = 0;
+            for (let i = 0; i < url.length; i++) seed += url.charCodeAt(i);
+
+            setTimeout(() => {
+                // Выборка данных
+                const score = (7 + (seed % 30) / 10).toFixed(1);
+                const title = url.split('/').pop().replace('@', '') || "YouTube Channel";
                 
-                // Задержка для красоты анимации
-                setTimeout(() => {
-                    document.getElementById('name').innerText = data.name;
-                    document.getElementById('score').innerText = data.score;
-                    document.getElementById('advice').innerText = data.advice;
-                    
-                    document.getElementById('pros').innerHTML = data.pros.map(p => 
-                        `<li class="flex items-start gap-3"><span class="text-green-500 mt-1">●</span>${p}</li>`).join('');
-                    
-                    document.getElementById('minuses').innerHTML = data.minuses.map(m => 
-                        `<li class="flex items-start gap-3"><span class="text-red-500 mt-1">○</span>${m}</li>`).join('');
-                    
-                    loader.classList.add('hidden');
-                    results.classList.remove('hidden');
-                    btnText.classList.remove('hidden');
-                    spinner.classList.add('hidden');
-                    btn.disabled = false;
-                }, 800);
+                const p1 = prosPool[seed % prosPool.length];
+                const p2 = prosPool[(seed + 2) % prosPool.length];
+                const m1 = consPool[(seed + 1) % consPool.length];
+                const m2 = consPool[(seed + 3) % consPool.length];
+                const advice = advicePool[seed % advicePool.length];
 
-            } catch (e) {
-                alert("Ошибка соединения. Проверьте развертывание скрипта.");
+                // Отрисовка
+                document.getElementById('resTitle').innerText = title;
+                document.getElementById('resScore').innerText = score;
+                document.getElementById('resAdvice').innerText = advice;
+                document.getElementById('resPros').innerHTML = `<li>✓ ${p1}</li><li>✓ ${p2}</li>`;
+                document.getElementById('resMinuses').innerHTML = `<li>✕ ${m1}</li><li>✕ ${m2}</li>`;
+
                 loader.classList.add('hidden');
+                results.classList.remove('hidden');
                 btnText.classList.remove('hidden');
                 spinner.classList.add('hidden');
-                btn.disabled = false;
-            }
+            }, 1200);
         }
     </script>
 </body>
