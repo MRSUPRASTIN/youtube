@@ -16,13 +16,18 @@
 
         body { 
             font-family: 'Outfit', sans-serif; 
-            background: #020617; 
+            /* Установка GIF фона */
+            background: linear-gradient(rgba(2, 6, 23, 0.8), rgba(2, 6, 23, 0.8)), url('2.gif');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: #f8fafc;
             overflow-x: hidden;
+            min-height: screen;
         }
 
         .glass-card { 
-            background: rgba(15, 23, 42, 0.7); 
+            background: rgba(15, 23, 42, 0.75); 
             backdrop-filter: blur(24px); 
             border: 1px solid rgba(255, 255, 255, 0.08); 
             border-radius: 1.5rem;
@@ -83,14 +88,12 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-6">
 
-    <!-- Background Decoration -->
     <div class="fixed inset-0 -z-10">
-        <div class="orb w-96 h-96 bg-red-600/20 top-[-10%] left-[-5%]"></div>
-        <div class="orb w-80 h-80 bg-blue-600/20 bottom-[-10%] right-[-5%]" style="animation-delay: -5s;"></div>
+        <div class="orb w-96 h-96 bg-red-600/10 top-[-10%] left-[-5%]"></div>
+        <div class="orb w-80 h-80 bg-blue-600/10 bottom-[-10%] right-[-5%]" style="animation-delay: -5s;"></div>
     </div>
 
     <div class="w-full max-w-3xl">
-        <!-- Header -->
         <header class="text-center mb-10">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-[10px] font-black tracking-[0.2em] text-white uppercase bg-white/5 rounded-full border border-white/10">
                 <span class="w-2 h-2 bg-blue-500 rounded-full animate-ping"></span>
@@ -102,9 +105,8 @@
             <p class="text-slate-400 text-lg font-light tracking-wide">Проверка UX/UI-эргономики, конверсии и Core Web Vitals</p>
         </header>
 
-        <!-- Search Bar -->
         <div class="glass-card p-2 mb-12 shadow-2xl relative group">
-            <div class="absolute -inset-1 bg-gradient-to-r from-red-500 to-blue-500 rounded-[1.6rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+            <div class="absolute -inset-1 bg-gradient-to-r from-red-500 to-blue-500 rounded-[1.6rem] blur opacity-10 group-hover:opacity-30 transition duration-1000"></div>
             <div class="relative flex items-center bg-slate-950/50 rounded-[1.4rem]">
                 <div class="pl-6 text-slate-500">
                     <i class="fa-solid fa-globe text-xl"></i>
@@ -118,7 +120,6 @@
             </div>
         </div>
 
-        <!-- Loader -->
         <div id="loader" class="hidden text-center py-20">
             <div class="inline-block relative">
                 <div class="w-20 h-20 border-2 border-white/5 border-t-blue-500 rounded-full animate-spin"></div>
@@ -129,7 +130,6 @@
             <p class="mt-8 text-slate-400 font-medium tracking-widest uppercase text-[10px]">Анализируем DOM-дерево и микро-интерации...</p>
         </div>
 
-        <!-- Results Section -->
         <div id="results" class="hidden space-y-6">
             <div class="glass-card p-8 bg-gradient-to-br from-white/[0.05] to-transparent">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -170,7 +170,6 @@
     </div>
 
     <script>
-        // Обновленный пул преимуществ веб-интерфейсов
         const prosPool = [
             "Идеальный баланс контрастности (WCAG compliant)",
             "Мгновенный отклик микро-взаимодействий",
@@ -182,7 +181,6 @@
             "Прозрачная архитектура форм без лишних полей ввода"
         ];
 
-        // Обновленный пул минусов и ошибок веб-интерфейсов
         const consPool = [
             "Высокая когнитивная нагрузка на пользователя",
             "Низкий контраст мелкого шрифта и элементов UI",
@@ -194,7 +192,6 @@
             "Перегруженный интерфейс («визуальный шум»)"
         ];
 
-        // Универсальные стратегические советы для сайтов
         const advicePool = [
             "Рекомендуется внедрить динамическую валидацию форм прямо во время ввода, чтобы сократить процент брошенных сессий.",
             "Поработайте над снижением времени Largest Contentful Paint (LCP): сожмите изображения в WebP/AVIF и отложите тяжелый JS.",
@@ -219,13 +216,11 @@
             scoreFill.style.width = '0%';
 
             let seed = 0;
-            // Нормализация ввода (убираем http/https/www для чистоты селектора)
             const cleanUrl = url.replace(/^(https?:\/\/)?(www\.)?/, '');
             for (let i = 0; i < cleanUrl.length; i++) seed += cleanUrl.charCodeAt(i);
 
             setTimeout(() => {
                 const scoreValue = (6.5 + (seed % 31) / 10).toFixed(1);
-                // Красивое отображение домена в качестве заголовка
                 const title = cleanUrl.split('/')[0] || "Target Website";
                 
                 const p1 = prosPool[seed % prosPool.length];
@@ -253,7 +248,6 @@
                 btnText.classList.remove('opacity-0');
                 spinner.classList.add('hidden');
                 
-                // Эффект заполнения шкалы
                 setTimeout(() => {
                     scoreFill.style.width = (scoreValue * 10) + '%';
                 }, 100);
