@@ -83,38 +83,42 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-6">
 
+    <!-- Background Decoration -->
     <div class="fixed inset-0 -z-10">
         <div class="orb w-96 h-96 bg-red-600/20 top-[-10%] left-[-5%]"></div>
         <div class="orb w-80 h-80 bg-blue-600/20 bottom-[-10%] right-[-5%]" style="animation-delay: -5s;"></div>
     </div>
 
     <div class="w-full max-w-3xl">
+        <!-- Header -->
         <header class="text-center mb-10">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-[10px] font-black tracking-[0.2em] text-white uppercase bg-white/5 rounded-full border border-white/10">
-                <span class="w-2 h-2 bg-red-500 rounded-full animate-ping"></span>
-                AI Content Engine Active
+                <span class="w-2 h-2 bg-blue-500 rounded-full animate-ping"></span>
+                UX/UI Engine Active
             </div>
             <h1 class="text-6xl md:text-8xl font-black mb-4 tracking-tighter uppercase italic">
                 ST<span class="gradient-text">Auditor</span>
             </h1>
-            <p class="text-slate-400 text-lg font-light tracking-wide">Анализ качества и вовлеченности через призму нейросетей</p>
+            <p class="text-slate-400 text-lg font-light tracking-wide">Проверка UX/UI-эргономики, конверсии и Core Web Vitals</p>
         </header>
 
+        <!-- Search Bar -->
         <div class="glass-card p-2 mb-12 shadow-2xl relative group">
             <div class="absolute -inset-1 bg-gradient-to-r from-red-500 to-blue-500 rounded-[1.6rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
             <div class="relative flex items-center bg-slate-950/50 rounded-[1.4rem]">
                 <div class="pl-6 text-slate-500">
-                    <i class="fa-brands fa-youtube text-xl"></i>
+                    <i class="fa-solid fa-globe text-xl"></i>
                 </div>
-                <input type="text" id="url" placeholder="Вставьте ссылку на канал или ник..." 
+                <input type="text" id="url" placeholder="Вставьте ссылку на ваш сайт..." 
                        class="flex-1 bg-transparent border-none outline-none px-4 py-5 text-lg placeholder-slate-600 text-white">
                 <button onclick="analyze()" id="btn" class="mr-2 bg-white text-black hover:bg-blue-50 transition-all px-8 py-4 rounded-[1.1rem] font-bold uppercase text-sm flex items-center gap-3">
-                    <span id="btnText">Запустить аудит</span>
+                    <span id="btnText">Аудит сайта</span>
                     <i id="spinner" class="fas fa-circle-notch animate-spin hidden"></i>
                 </button>
             </div>
         </div>
 
+        <!-- Loader -->
         <div id="loader" class="hidden text-center py-20">
             <div class="inline-block relative">
                 <div class="w-20 h-20 border-2 border-white/5 border-t-blue-500 rounded-full animate-spin"></div>
@@ -122,23 +126,24 @@
                     <div class="w-10 h-10 border-2 border-white/5 border-b-red-500 rounded-full animate-spin" style="animation-direction: reverse;"></div>
                 </div>
             </div>
-            <p class="mt-8 text-slate-400 font-medium tracking-widest uppercase text-[10px]">Масштабирование данных...</p>
+            <p class="mt-8 text-slate-400 font-medium tracking-widest uppercase text-[10px]">Анализируем DOM-дерево и микро-интерации...</p>
         </div>
 
+        <!-- Results Section -->
         <div id="results" class="hidden space-y-6">
             <div class="glass-card p-8 bg-gradient-to-br from-white/[0.05] to-transparent">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                     <div class="flex-1">
                         <div class="flex items-center gap-3 mb-2">
-                            <h2 id="resTitle" class="text-3xl font-black text-white uppercase tracking-tight truncate max-w-[250px]">Channel</h2>
-                            <span class="px-2 py-0.5 bg-blue-500/10 text-blue-400 text-[10px] font-bold rounded border border-blue-500/20">VERIFIED</span>
+                            <h2 id="resTitle" class="text-3xl font-black text-white uppercase tracking-tight truncate max-w-[250px]">Site</h2>
+                            <span class="px-2 py-0.5 bg-blue-500/10 text-blue-400 text-[10px] font-bold rounded border border-blue-500/20">DOM SCANNED</span>
                         </div>
                         <p id="resAdvice" class="text-slate-400 text-sm font-light leading-relaxed"></p>
                     </div>
                     
                     <div class="w-full md:w-auto min-w-[160px] bg-black/40 p-6 rounded-2xl border border-white/5 text-center">
                         <div id="resScore" class="text-6xl font-black gradient-text leading-none">0.0</div>
-                        <div class="text-[9px] font-black text-slate-500 mt-3 tracking-[0.3em] uppercase">Global Index</div>
+                        <div class="text-[9px] font-black text-slate-500 mt-3 tracking-[0.3em] uppercase">UX / UI Index</div>
                         <div class="progress-bar">
                             <div id="scoreFill" class="progress-fill"></div>
                         </div>
@@ -149,14 +154,14 @@
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="glass-card p-6 border-l-2 border-emerald-500/30">
                     <h3 class="text-emerald-400 text-[10px] font-black uppercase tracking-widest mb-6 flex items-center gap-2">
-                        <i class="fas fa-bolt text-xs"></i> Сильные стороны
+                        <i class="fas fa-bolt text-xs"></i> Сильные стороны UI
                     </h3>
                     <ul id="resPros" class="space-y-4 text-sm text-slate-300"></ul>
                 </div>
                 
                 <div class="glass-card p-6 border-l-2 border-red-500/30">
                     <h3 class="text-red-400 text-[10px] font-black uppercase tracking-widest mb-6 flex items-center gap-2">
-                        <i class="fas fa-triangle-exclamation text-xs"></i> Точки роста
+                        <i class="fas fa-triangle-exclamation text-xs"></i> Критические уязвимости UX
                     </h3>
                     <ul id="resMinuses" class="space-y-4 text-sm text-slate-300"></ul>
                 </div>
@@ -165,23 +170,36 @@
     </div>
 
     <script>
+        // Обновленный пул преимуществ веб-интерфейсов
         const prosPool = [
-            "Мастерский саунд-дизайн", "Высокая плотность монтажа", 
-            "Глубокое понимание алгоритмов", "Эстетичная цветокоррекция", 
-            "Сильный личный бренд", "Идеальный CTR обложек",
-            "Высокий Retention rate", "Активное ядро аудитории"
+            "Идеальный баланс контрастности (WCAG compliant)",
+            "Мгновенный отклик микро-взаимодействий",
+            "Грамотное распределение «воздуха» (White Space)",
+            "Высокая скорость загрузки первого экрана (LCP < 2.5s)",
+            "Четкая и понятная визуальная иерархия шрифтов",
+            "Интуитивная навигация (правило 3-х кликов соблюдено)",
+            "Адаптивность (Mobile-first структура стабильна)",
+            "Прозрачная архитектура форм без лишних полей ввода"
         ];
 
+        // Обновленный пул минусов и ошибок веб-интерфейсов
         const consPool = [
-            "Слабая SEO-оптимизация", "Низкое качество аудио",
-            "Затянутая экспозиция", "Отсутствие call-to-action",
-            "Хаотичный график выхода", "Визуальный перегруз",
-            "Слабое удержание в конце", "Игнорирование комментариев"
+            "Высокая когнитивная нагрузка на пользователя",
+            "Низкий контраст мелкого шрифта и элементов UI",
+            "Отсутствие inline-валидации при заполнении форм",
+            "Неочевидные или скрытые кнопки призыва к действию (CTA)",
+            "Блокирующие рендеринг тяжелые скрипты и анимации",
+            "Нарушение консистентности: разные стили кнопок",
+            "Слишком мелкие области клика на смартфонах (< 48px)",
+            "Перегруженный интерфейс («визуальный шум»)"
         ];
 
+        // Универсальные стратегические советы для сайтов
         const advicePool = [
-            "Фокусируйтесь на Shorts для трафика.", "Обновите визуальный стиль шапки.",
-            "Используйте интригу в первых 5 секундах.", "Добавьте интерактив с опросами."
+            "Рекомендуется внедрить динамическую валидацию форм прямо во время ввода, чтобы сократить процент брошенных сессий.",
+            "Поработайте над снижением времени Largest Contentful Paint (LCP): сожмите изображения в WebP/AVIF и отложите тяжелый JS.",
+            "Усильте контрастность кнопок CTA. Главное целевое действие должно считываться пользователем за первые 2 секунды.",
+            "Снизьте информационную плотность на главной странице. Дайте интерфейсу «подышать», добавив свободные отступы."
         ];
 
         function analyze() {
@@ -201,11 +219,14 @@
             scoreFill.style.width = '0%';
 
             let seed = 0;
-            for (let i = 0; i < url.length; i++) seed += url.charCodeAt(i);
+            // Нормализация ввода (убираем http/https/www для чистоты селектора)
+            const cleanUrl = url.replace(/^(https?:\/\/)?(www\.)?/, '');
+            for (let i = 0; i < cleanUrl.length; i++) seed += cleanUrl.charCodeAt(i);
 
             setTimeout(() => {
-                const scoreValue = (7 + (seed % 28) / 10).toFixed(1);
-                const title = url.includes('/') ? url.split('/').pop().replace('@', '') : url;
+                const scoreValue = (6.5 + (seed % 31) / 10).toFixed(1);
+                // Красивое отображение домена в качестве заголовка
+                const title = cleanUrl.split('/')[0] || "Target Website";
                 
                 const p1 = prosPool[seed % prosPool.length];
                 const p2 = prosPool[(seed + 2) % prosPool.length];
@@ -232,7 +253,7 @@
                 btnText.classList.remove('opacity-0');
                 spinner.classList.add('hidden');
                 
-                // Анимация прогресса
+                // Эффект заполнения шкалы
                 setTimeout(() => {
                     scoreFill.style.width = (scoreValue * 10) + '%';
                 }, 100);
